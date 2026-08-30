@@ -814,3 +814,279 @@ main {
     transform: translateY(-15px);
   }
 }
+/* ==========================================
+   🍄 MAPA DE NIVELES
+   ========================================== */
+
+.world-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+  padding: 25px;
+  border-radius: 25px;
+  background: linear-gradient(145deg, #8ed8ff, #d9f6ff);
+  border: 4px solid white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.world-header-icon {
+  font-size: 60px;
+}
+
+.world-header h2 {
+  margin: 3px 0;
+  font-size: 30px;
+}
+
+.world-header p {
+  margin: 5px 0 0;
+}
+
+
+/* CAMINO */
+
+.levels-map {
+  position: relative;
+  padding: 35px 20px;
+  border-radius: 30px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 15% 15%, white 0 25px, transparent 26px),
+    radial-gradient(circle at 80% 20%, white 0 35px, transparent 36px),
+    linear-gradient(
+      180deg,
+      #8ed8ff 0%,
+      #a9e6ff 45%,
+      #76d275 46%,
+      #4caf50 100%
+    );
+
+  border: 5px solid white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+
+/* LÍNEA DEL CAMINO */
+
+.levels-path {
+  position: absolute;
+
+  left: 50%;
+  top: 80px;
+  bottom: 150px;
+
+  width: 20px;
+
+  transform: translateX(-50%);
+
+  background: #d99b52;
+  border: 4px solid #9b622d;
+
+  border-radius: 20px;
+
+  z-index: 1;
+}
+
+
+/* NIVELES */
+
+#topics-list {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+
+/* TARJETA DEL NIVEL */
+
+#topics-list .topic-card {
+
+  width: min(500px, 90%);
+
+  min-height: 150px;
+
+  margin: 0 auto;
+
+  padding: 25px;
+
+  border-radius: 30px;
+
+  background: linear-gradient(
+    145deg,
+    #ffcb4d,
+    #f39c12
+  );
+
+  border: 5px solid white;
+
+  box-shadow:
+    0 9px 0 #b86b00,
+    0 14px 25px rgba(0,0,0,0.18);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+
+/* NIVELES ALTERNADOS */
+
+#topics-list .topic-card:nth-child(even) {
+  transform: translateX(50px);
+}
+
+#topics-list .topic-card:nth-child(odd) {
+  transform: translateX(-50px);
+}
+
+#topics-list .topic-card:hover {
+  transform: scale(1.03);
+}
+
+
+/* TEXTO */
+
+#topics-list .topic-info h3 {
+
+  font-size: 22px;
+
+  margin-bottom: 8px;
+
+  color: white;
+
+  text-shadow: 2px 3px 0 rgba(0,0,0,0.2);
+}
+
+#topics-list .topic-info p {
+  color: white;
+  font-weight: 700;
+}
+
+
+/* ICONO DEL NIVEL */
+
+#topics-list .topic-card::before {
+
+  content: "🍄";
+
+  font-size: 45px;
+
+  margin-right: 15px;
+
+  filter: drop-shadow(
+    0 4px 2px rgba(0,0,0,0.2)
+  );
+}
+
+
+/* COMPLETADO */
+
+#topics-list .topic-card.completed {
+
+  background: linear-gradient(
+    145deg,
+    #65d46e,
+    #2e9d3a
+  );
+
+  box-shadow:
+    0 9px 0 #207128,
+    0 14px 25px rgba(0,0,0,0.18);
+}
+
+
+/* CASTILLO FINAL */
+
+.final-boss {
+
+  position: relative;
+
+  z-index: 4;
+
+  width: min(500px, 90%);
+
+  margin: 45px auto 10px;
+
+  padding: 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  border-radius: 30px;
+
+  background: linear-gradient(
+    145deg,
+    #8b5cf6,
+    #5b21b6
+  );
+
+  border: 5px solid white;
+
+  color: white;
+
+  box-shadow:
+    0 10px 0 #35127a,
+    0 15px 25px rgba(0,0,0,0.2);
+}
+
+.boss-icon {
+  font-size: 60px;
+}
+
+.final-boss strong {
+  font-size: 22px;
+}
+
+.final-boss p {
+  margin: 5px 0 0;
+}
+
+
+/* MÓVIL */
+
+@media (max-width: 700px) {
+
+  .world-header {
+    padding: 18px;
+  }
+
+  .world-header-icon {
+    font-size: 45px;
+  }
+
+  .world-header h2 {
+    font-size: 23px;
+  }
+
+  .levels-map {
+    padding: 25px 10px;
+  }
+
+  #topics-list .topic-card {
+    width: 90%;
+    min-height: 130px;
+    padding: 18px;
+  }
+
+  #topics-list .topic-card:nth-child(even),
+  #topics-list .topic-card:nth-child(odd) {
+    transform: none;
+  }
+
+  .levels-path {
+    left: 50%;
+  }
+
+}
