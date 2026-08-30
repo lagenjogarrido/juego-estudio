@@ -570,7 +570,39 @@ function renderTopics(subjectId) {
   container.innerHTML = "";
 
   const topics = subject.topics || [];
+  const finalBoss = document.getElementById("final-boss");
 
+  if (finalBoss) {
+
+    const completedCount =
+      topics.filter(topic =>
+        state.completedTopics.includes(topic.id)
+      ).length;
+
+    const allCompleted =
+      topics.length > 0 &&
+      completedCount === topics.length;
+
+    if (allCompleted) {
+
+      finalBoss.classList.add("unlocked");
+
+      finalBoss.querySelector(".boss-icon").textContent = "🏰";
+
+      finalBoss.querySelector("p").textContent =
+        "🎉 ¡Todos los niveles completados!";
+
+    } else {
+
+      finalBoss.classList.remove("unlocked");
+
+      finalBoss.querySelector(".boss-icon").textContent = "🔒";
+
+      finalBoss.querySelector("p").textContent =
+        `Completa todos los niveles para desbloquearlo (${completedCount}/${topics.length})`;
+
+    }
+  }
   if (topics.length === 0) {
 
     container.innerHTML = `
