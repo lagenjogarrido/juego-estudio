@@ -53,78 +53,197 @@
     <main>
 
       <!-- ================= INICIO ================= -->
-      <section id="screen-home" class="screen active">
+    <!-- ================= INICIO ================= -->
+<section id="screen-home" class="screen active">
 
-        <div class="hero-card">
-          <div>
-            <p class="small-label">NIVEL ACTUAL</p>
-            <h2>Nivel <span id="home-level">1</span></h2>
-            <p>¡Sigue estudiando para subir de nivel! 🚀</p>
-          </div>
+  <div class="hero-card mario-hero">
 
-          <div class="level-circle">
-            <span id="home-level-circle">1</span>
-          </div>
-        </div>
+    <div>
+      <p class="small-label">🍄 AVENTURA DE RAFA</p>
 
-        <div class="stats-grid">
+      <h2>Nivel <span id="home-level">1</span></h2>
 
-          <div class="stat-card">
-            <span class="stat-icon">⭐</span>
-            <strong id="home-xp">0</strong>
-            <span>XP total</span>
-          </div>
+      <p>¡Completa misiones y avanza por el mapa! ⭐</p>
+    </div>
 
-          <div class="stat-card">
-            <span class="stat-icon">🪙</span>
-            <strong id="home-coins">0</strong>
-            <span>Monedas</span>
-          </div>
+    <div class="level-circle">
+      <span id="home-level-circle">1</span>
+    </div>
 
-          <div class="stat-card">
-            <span class="stat-icon">📚</span>
-            <strong id="home-topics">0</strong>
-            <span>Temas</span>
-          </div>
+  </div>
 
-          <div class="stat-card">
-            <span class="stat-icon">🎁</span>
-            <strong id="home-rewards">0</strong>
-            <span>Recompensas</span>
-          </div>
 
-        </div>
+  <!-- ESTADÍSTICAS -->
 
-        <div class="card">
-          <h2>📈 Progreso hacia el siguiente nivel</h2>
+  <div class="stats-grid">
 
-          <div class="progress-bar">
-            <div id="home-level-progress" class="progress-fill"></div>
-          </div>
+    <div class="stat-card">
+      <span class="stat-icon">⭐</span>
+      <strong id="home-xp">0</strong>
+      <span>XP</span>
+    </div>
 
-          <p id="home-level-text">0 / 100 XP</p>
-        </div>
+    <div class="stat-card">
+      <span class="stat-icon">🪙</span>
+      <strong id="home-coins">0</strong>
+      <span>Monedas</span>
+    </div>
 
-        <div class="card">
-          <h2>🎯 ¿Qué quieres hacer?</h2>
+    <div class="stat-card">
+      <span class="stat-icon">📚</span>
+      <strong id="home-topics">0</strong>
+      <span>Temas</span>
+    </div>
 
-          <div class="quick-actions">
-            <button onclick="showScreen('subjects')" class="big-button">
-              📚 Estudiar
-            </button>
+    <div class="stat-card">
+      <span class="stat-icon">🎁</span>
+      <strong id="home-rewards">0</strong>
+      <span>Recompensas</span>
+    </div>
 
-            <button onclick="showScreen('shop')" class="big-button">
-              🛒 Ir a la tienda
-            </button>
+  </div>
 
-            <button onclick="showScreen('profile')" class="big-button">
-              👤 Ver mi perfil
-            </button>
-          </div>
-        </div>
 
-      </section>
+  <!-- PROGRESO -->
 
+  <div class="card">
+
+    <h2>⭐ Progreso</h2>
+
+    <div class="progress-bar">
+      <div
+        id="home-level-progress"
+        class="progress-fill">
+      </div>
+    </div>
+
+    <p id="home-level-text">
+      0 / 100 XP
+    </p>
+
+  </div>
+
+
+  <!-- MAPA -->
+
+  <div class="game-map">
+
+    <div class="map-title">
+      <span>🗺️</span>
+      <div>
+        <h2>Mapa de mundos</h2>
+        <p>Elige una asignatura para comenzar</p>
+      </div>
+    </div>
+
+
+    <div class="world-map">
+
+
+      <!-- MUNDO 1 -->
+
+      <button
+        class="world-node world-1"
+        onclick="showScreen('subjects')">
+
+        <span class="world-icon">🖥️</span>
+
+        <strong>MUNDO 1</strong>
+
+        <span>Aplicaciones Ofimáticas</span>
+
+        <small>⭐ Comenzar aventura</small>
+
+      </button>
+
+
+      <!-- MUNDO 2 -->
+
+      <button
+        class="world-node world-2"
+        onclick="showScreen('subjects')">
+
+        <span class="world-icon">🌐</span>
+
+        <strong>MUNDO 2</strong>
+
+        <span>Redes Locales</span>
+
+        <small>⭐ Comenzar aventura</small>
+
+      </button>
+
+
+      <!-- MUNDO 3 -->
+
+      <button
+        class="world-node world-3"
+        onclick="showScreen('subjects')">
+
+        <span class="world-icon">🔧</span>
+
+        <strong>MUNDO 3</strong>
+
+        <span>Montaje y Mantenimiento</span>
+
+        <small>⭐ Comenzar aventura</small>
+
+      </button>
+
+
+      <!-- MUNDO 4 -->
+
+      <button
+        class="world-node world-4"
+        onclick="showScreen('subjects')">
+
+        <span class="world-icon">💻</span>
+
+        <strong>MUNDO 4</strong>
+
+        <span>Sistemas Operativos</span>
+
+        <small>⭐ Comenzar aventura</small>
+
+      </button>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- ACCESOS RÁPIDOS -->
+
+  <div class="quick-actions">
+
+    <button
+      onclick="showScreen('subjects')"
+      class="big-button">
+
+      📚 Ver asignaturas
+
+    </button>
+
+    <button
+      onclick="showScreen('shop')"
+      class="big-button">
+
+      🛒 Tienda
+
+    </button>
+
+    <button
+      onclick="showScreen('profile')"
+      class="big-button">
+
+      👤 Mi personaje
+
+    </button>
+
+  </div>
+
+</section>
 
       <!-- ================= ASIGNATURAS ================= -->
       <section id="screen-subjects" class="screen">
