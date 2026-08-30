@@ -263,24 +263,51 @@
 
 
       <!-- ================= TEMAS ================= -->
-      <section id="screen-topics" class="screen">
+   <section id="screen-topics" class="screen">
 
-        <button onclick="showScreen('subjects')" class="back-button">
-          ← Volver a asignaturas
-        </button>
+  <button onclick="showScreen('subjects')" class="back-button">
+    ← Volver al mapa
+  </button>
 
-        <div class="section-header">
-          <div>
-            <p class="small-label">ASIGNATURA</p>
-            <h2 id="selected-subject-name">Asignatura</h2>
-          </div>
-        </div>
+  <div class="world-header">
 
-        <div id="topics-list" class="topics-list">
-          <!-- Se rellena desde JavaScript -->
-        </div>
+    <div class="world-header-icon">
+      🌍
+    </div>
 
-      </section>
+    <div>
+      <p class="small-label">MUNDO</p>
+      <h2 id="selected-subject-name">Asignatura</h2>
+      <p>¡Avanza por los niveles y completa tus misiones!</p>
+    </div>
+
+  </div>
+
+
+  <!-- CAMINO DE NIVELES -->
+
+  <div class="levels-map">
+
+    <div class="levels-path"></div>
+
+    <div id="topics-list" class="topics-list">
+      <!-- Se rellena desde JavaScript -->
+    </div>
+
+    <div class="final-boss">
+
+      <div class="boss-icon">🏰</div>
+
+      <div>
+        <strong>CASTILLO FINAL</strong>
+        <p>Examen de la asignatura</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
 
       <!-- ================= TIENDA ================= -->
