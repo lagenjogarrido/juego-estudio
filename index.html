@@ -1,1 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta name="description" content="Juego de estudio de Rafa">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <title>Rafa Quest 🎮</title>
+</head>
 
+<body>
+
+  <div id="app">
+
+    <!-- CABECERA -->
+    <header class="topbar">
+      <div>
+        <h1>🎮 Rafa Quest</h1>
+        <p id="welcome">¡A por el siguiente nivel!</p>
+      </div>
+
+      <div class="player-stats">
+        <span>⭐ <strong id="header-xp">0</strong> XP</span>
+        <span>🪙 <strong id="header-coins">0</strong></span>
+      </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="navigation">
+      <button onclick="showScreen('home')" class="nav-button active">
+        🏠 Inicio
+      </button>
+
+      <button onclick="showScreen('subjects')" class="nav-button">
+        📚 Estudiar
+      </button>
+
+      <button onclick="showScreen('shop')" class="nav-button">
+        🛒 Tienda
+      </button>
+
+      <button onclick="showScreen('profile')" class="nav-button">
+        👤 Perfil
+      </button>
+
+      <button onclick="showScreen('admin')" class="nav-button">
+        ⚙️ Administración
+      </button>
+    </nav>
+
+    <main>
+
+      <!-- ================= INICIO ================= -->
+      <section id="screen-home" class="screen active">
+
+        <div class="hero-card">
+          <div>
+            <p class="small-label">NIVEL ACTUAL</p>
+            <h2>Nivel <span id="home-level">1</span></h2>
+            <p>¡Sigue estudiando para subir de nivel! 🚀</p>
+          </div>
+
+          <div class="level-circle">
+            <span id="home-level-circle">1</span>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+            <span class="stat-icon">⭐</span>
+            <strong id="home-xp">0</strong>
+            <span>XP total</span>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">🪙</span>
+            <strong id="home-coins">0</strong>
+            <span>Monedas</span>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">📚</span>
+            <strong id="home-topics">0</strong>
+            <span>Temas</span>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">🎁</span>
+            <strong id="home-rewards">0</strong>
+            <span>Recompensas</span>
+          </div>
+
+        </div>
+
+        <div class="card">
+          <h2>📈 Progreso hacia el siguiente nivel</h2>
+
+          <div class="progress-bar">
+            <div id="home-level-progress" class="progress-fill"></div>
+          </div>
+
+          <p id="home-level-text">0 / 100 XP</p>
+        </div>
+
+        <div class="card">
+          <h2>🎯 ¿Qué quieres hacer?</h2>
+
+          <div class="quick-actions">
+            <button onclick="showScreen('subjects')" class="big-button">
+              📚 Estudiar
+            </button>
+
+            <button onclick="showScreen('shop')" class="big-button">
+              🛒 Ir a la tienda
+            </button>
+
+            <button onclick="showScreen('profile')" class="big-button">
+              👤 Ver mi perfil
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ================= ASIGNATURAS ================= -->
+      <section id="screen-subjects" class="screen">
+
+        <div class="section-header">
+          <div>
+            <h2>📚 Mis asignaturas</h2>
+            <p>Elige qué quieres estudiar.</p>
+          </div>
+        </div>
+
+        <div id="subjects-list" class="subjects-grid">
+          <!-- Se rellena desde JavaScript -->
+        </div>
+
+      </section>
+
+
+      <!-- ================= TEMAS ================= -->
+      <section id="screen-topics" class="screen">
+
+        <button onclick="showScreen('subjects')" class="back-button">
+          ← Volver a asignaturas
+        </button>
+
+        <div class="section-header">
+          <div>
+            <p class="small-label">ASIGNATURA</p>
+            <h2 id="selected-subject-name">Asignatura</h2>
+          </div>
+        </div>
+
+        <div id="topics-list" class="topics-list">
+          <!-- Se rellena desde JavaScript -->
+        </div>
+
+      </section>
+
+
+      <!-- ================= TIENDA ================= -->
+      <section id="screen-shop" class="screen">
+
+        <div class="section-header">
+          <div>
+            <h2>🛒 Tienda</h2>
+            <p>Canjea tus monedas por recompensas.</p>
+          </div>
+
+          <div class="coin-display">
+            🪙 <strong id="shop-coins">0</strong>
+          </div>
+        </div>
+
+        <div id="rewards-list" class="rewards-grid">
+          <!-- Se rellena desde JavaScript -->
+        </div>
+
+      </section>
+
+
+      <!-- ================= PERFIL ================= -->
+      <section id="screen-profile" class="screen">
+
+        <div class="profile-card">
+
+          <div class="avatar">
+            🎮
+          </div>
+
+          <h2>Rafa</h2>
+
+          <p>Nivel <strong id="profile-level">1</strong></p>
+
+          <div class="profile-xp">
+            <strong id="profile-xp">0</strong> XP
+          </div>
+
+          <div class="progress-bar">
+            <div id="profile-progress" class="progress-fill"></div>
+          </div>
+
+        </div>
+
+        <div class="card">
+          <h2>📊 Estadísticas</h2>
+
+          <div class="stats-list">
+
+            <div>
+              <span>⭐ XP total</span>
+              <strong id="profile-total-xp">0</strong>
+            </div>
+
+            <div>
+              <span>🪙 Monedas</span>
+              <strong id="profile-total-coins">0</strong>
+            </div>
+
+            <div>
+              <span>📚 Temas completados</span>
+              <strong id="profile-completed-topics">0</strong>
+            </div>
+
+            <div>
+              <span>🎁 Recompensas obtenidas</span>
+              <strong id="profile-rewards">0</strong>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ================= ADMINISTRACIÓN ================= -->
+      <section id="screen-admin" class="screen">
+
+        <div class="section-header">
+          <div>
+            <h2>⚙️ Administración</h2>
+            <p>Gestiona el contenido del juego.</p>
+          </div>
+        </div>
+
+        <div class="admin-grid">
+
+          <div class="admin-card">
+            <span>🎁</span>
+            <h3>Gestionar recompensas</h3>
+            <p>Añadir, editar, activar, desactivar o eliminar recompensas.</p>
+            <button onclick="showAdminRewards()">
+              Gestionar
+            </button>
+          </div>
+
+          <div class="admin-card">
+            <span>📚</span>
+            <h3>Asignaturas y temas</h3>
+            <p>Gestiona las asignaturas y añade los temas cuando quieras.</p>
+            <button onclick="showAdminSubjects()">
+              Gestionar
+            </button>
+          </div>
+
+          <div class="admin-card">
+            <span>💰</span>
+            <h3>Monedero</h3>
+            <p>Consulta el saldo y el historial de movimientos.</p>
+            <button onclick="showAdminWallet()">
+              Ver historial
+            </button>
+          </div>
+
+        </div>
+
+        <div id="admin-content"></div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js")
+          .catch(error => console.log("Service Worker:", error));
+      });
+    }
+  </script>
+
+</body>
+</html>
