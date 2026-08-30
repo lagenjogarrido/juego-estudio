@@ -331,6 +331,7 @@ function getLevelProgress() {
 
 
 // ---------- NAVEGACIÓN ----------
+
 function requestAdminAccess() {
   const password = prompt("🔐 Introduce la contraseña de administración:");
 
