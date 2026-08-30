@@ -2356,7 +2356,11 @@ function escapeAttribute(value) {
 
 document.addEventListener(
   "DOMContentLoaded",
-  () => {
+  async () => {
+
+    await loadStateFromSupabase();
+
     renderAll();
+
   }
 );
