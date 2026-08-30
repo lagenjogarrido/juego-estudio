@@ -261,9 +261,7 @@ let selectedSubjectId = null;
 const GAME_ID = "rafa-quest";
 
 async function loadStateFromSupabase() {
-
   try {
-
     const { data, error } = await supabaseClient
       .from("game_data")
       .select("data")
@@ -275,11 +273,12 @@ async function loadStateFromSupabase() {
       return false;
     }
 
-    if (!data) {
+    if (!data || !data.data) {
       console.log("No hay partida online todavía.");
       return false;
     }
 
+    // ☁️ La partida online pasa a ser la partida principal
     state = {
       ...structuredClone(defaultState),
       ...data.data,
@@ -305,16 +304,17 @@ async function loadStateFromSupabase() {
         data.data.lastStudyDate || null
     };
 
-    // Guardamos también una copia local
+    // 💾 Actualizamos también la copia local
     localStorage.setItem(
       "rafaQuestState",
       JSON.stringify(state)
     );
 
+    console.log("☁️ Partida cargada desde Supabase");
+
     return true;
 
   } catch (error) {
-
     console.error(
       "Error cargando partida online:",
       error
@@ -326,9 +326,7 @@ async function loadStateFromSupabase() {
 
 
 function loadState() {
-
   try {
-
     const saved =
       localStorage.getItem("rafaQuestState");
 
@@ -336,8 +334,7 @@ function loadState() {
       return structuredClone(defaultState);
     }
 
-    const parsed =
-      JSON.parse(saved);
+    const parsed = JSON.parse(saved);
 
     return {
       ...structuredClone(defaultState),
@@ -365,7 +362,6 @@ function loadState() {
     };
 
   } catch (error) {
-
     console.error(
       "Error cargando partida:",
       error
@@ -390,7 +386,6 @@ function saveState() {
 
 
 async function saveStateToSupabase() {
-
   try {
 
     const { error } = await supabaseClient
@@ -411,7 +406,12 @@ async function saveStateToSupabase() {
         "Error guardando en Supabase:",
         error
       );
+      return false;
     }
+
+    console.log("☁️ Partida guardada en Supabase");
+
+    return true;
 
   } catch (error) {
 
@@ -419,11 +419,10 @@ async function saveStateToSupabase() {
       "Error guardando partida online:",
       error
     );
+
+    return false;
   }
 }
-
-
-
 
 
 // ---------- NIVELES ----------
