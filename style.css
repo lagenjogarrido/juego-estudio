@@ -771,68 +771,36 @@ main {
 
 }
 /* ==========================================
-   🍄 CAMINO DEL MAPA
+   🍄 CAMINO DEL MAPA - NUEVO
    ========================================== */
 
 .world-map {
   position: relative;
 }
 
-/* Camino que une los mundos */
-.world-map::before {
-  content: "";
+.world-map::after {
+  content: "🪙     🪙     ⭐     🪙     🪙";
   position: absolute;
-  width: 65%;
-  height: 25px;
-  left: 17%;
   top: 50%;
-  transform: translateY(-50%);
-  background: #d99b52;
-  border: 5px solid #9b622d;
-  border-radius: 20px;
-  z-index: 1;
-  box-shadow: 0 5px 0 rgba(0,0,0,0.15);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
 }
 
-/* Los mundos quedan por encima del camino */
 .world-node {
-  z-index: 3;
+  position: relative;
+  z-index: 5;
 }
 
-/* Pequeñas monedas decorativas */
-.world-1::after {
-  content: "🪙  🪙";
-  position: absolute;
-  right: -25px;
-  top: 45%;
-  font-size: 28px;
+/* Animación al pasar por encima */
+
+.world-node:hover {
+  transform: translateY(-8px) scale(1.04);
 }
 
-.world-2::after {
-  content: "⭐";
-  position: absolute;
-  left: -25px;
-  top: 45%;
-  font-size: 30px;
-}
-
-.world-3::after {
-  content: "🪙  🪙";
-  position: absolute;
-  right: -25px;
-  top: 45%;
-  font-size: 28px;
-}
-
-.world-4::after {
-  content: "🏁";
-  position: absolute;
-  right: -35px;
-  top: 40%;
-  font-size: 40px;
-}
-
-/* Efecto de salto */
 .world-node:hover .world-icon {
   animation: marioJump 0.5s ease;
 }
@@ -845,26 +813,4 @@ main {
   50% {
     transform: translateY(-15px);
   }
-}
-
-/* En móvil, hacemos el camino vertical */
-@media (max-width: 700px) {
-
-  .world-map::before {
-    width: 20px;
-    height: 80%;
-    left: 50%;
-    top: 10%;
-    transform: translateX(-50%);
-  }
-
-  .world-1::after,
-  .world-2::after,
-  .world-3::after,
-  .world-4::after {
-    right: auto;
-    left: calc(50% + 35px);
-    top: 45%;
-  }
-
 }
