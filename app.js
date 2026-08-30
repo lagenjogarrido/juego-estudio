@@ -585,53 +585,59 @@ function renderTopics(subjectId) {
   
   }
 
-  topics.forEach(topic => {
+topics.forEach((topic, index) => {
 
-    const completed =
-      state.completedTopics.includes(topic.id);
+  const completed =
+    state.completedTopics.includes(topic.id);
 
-    const card =
-      document.createElement("div");
+  const card =
+    document.createElement("div");
 
-    card.className =
-      `topic-card ${completed ? "completed" : ""}`;
+  card.className =
+    `topic-card ${completed ? "completed" : ""}`;
 
-    card.innerHTML = `
-      <div class="topic-info">
+  card.innerHTML = `
+    <div class="topic-info">
 
-        <h3>
-          ${completed ? "✅" : "📖"}
-          ${escapeHTML(topic.name)}
-        </h3>
+      <h3>
+        ${completed ? "🏁" : "🍄"}
+        <span class="level-number">
+          Nivel ${index + 1}
+        </span>
+        ${escapeHTML(topic.name)}
+      </h3>
 
-        <p>
-          ${completed
-            ? "Tema completado"
-            : `+${topic.xp || 20} XP · +${topic.coins || 10} 🪙`
-          }
-        </p>
-
-      </div>
-
-      <div class="topic-actions">
-
+      <p>
         ${
           completed
-          ? `<button class="back-button"
-               onclick="uncompleteTopic('${topic.id}')">
-               ↩️ Desmarcar
-             </button>`
-          : `<button class="big-button"
-               onclick="completeTopic('${topic.id}')">
-               ✅ Completar
-             </button>`
+            ? "⭐ ¡Nivel superado!"
+            : `⭐ +${topic.xp || 20} XP · 🪙 +${topic.coins || 10}`
         }
+      </p>
 
-      </div>
-    `;
+    </div>
 
-    container.appendChild(card);
-  });
+    <div class="topic-actions">
+
+      ${
+        completed
+          ? `<button
+               class="back-button"
+               onclick="uncompleteTopic('${topic.id}')">
+               🏁 Nivel superado
+             </button>`
+          : `<button
+               class="big-button"
+               onclick="completeTopic('${topic.id}')">
+               ▶️ JUGAR NIVEL
+             </button>`
+      }
+
+    </div>
+  `;
+
+  container.appendChild(card);
+});
 
 
   // ---------- TAREAS DE LA ASIGNATURA ----------
