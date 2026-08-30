@@ -1342,7 +1342,358 @@ function addTopic(subjectId) {
   showAdminSubjects();
 }
 
+// ---------- ADMINISTRACIÓN DE TAREAS ----------
 
+function showAdminTasks() {
+
+  const container =
+    document.getElementById("admin-content");
+
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="card">
+
+      <div class="section-header">
+
+        <div>
+          <h2>✅ Gestionar tareas</h2>
+          <p>
+            Crea y administra las tareas de estudio.
+          </p>
+        </div>
+
+        <button
+          class="big-button"
+          onclick="showTaskForm()"
+        >
+          ➕ Nueva tarea
+        </button>
+
+      </div>
+
+      <div id="admin-tasks-list"></div>
+
+    </div>
+  `;
+
+  renderAdminTasks();
+}
+
+
+function renderAdminTasks() {
+
+  const container =
+    document.getElementById("admin-tasks-list");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const tasks = state.tasks || [];
+
+  if (tasks.length === 0) {
+
+    container.innerHTML = `
+      <div class="card">
+        <h3>📭 Todavía no hay tareas</h3>
+        <p>
+          Pulsa "Nueva tarea" para añadir la primera.
+        </p>
+      </div>
+    `;
+
+    return;
+  }
+
+  tasks.forEach(task => {
+
+    const subject =
+      state.subjects.find(
+        subject => subject.id === task.subjectId
+      );
+
+    const item =
+      document.createElement("div");
+
+    item.className = "topic-card";
+
+    item.innerHTML = `
+      <div class="topic-info">
+
+        <h3>
+          ${task.active ? "🟢" : "🔴"}
+          ${escapeHTML(task.name)}
+        </h3>
+
+        <p>
+          📚 ${subject
+            ? escapeHTML(subject.name)
+            : "Sin asignatura"}
+
+          · ⭐ ${task.xp} XP
+          · 🪙 ${task.coins}
+        </p>
+
+        ${
+          task.description
+            ? `<p>${escapeHTML(task.description)}</p>`
+            : ""
+        }
+
+      </div>
+
+      <div class="topic-actions">
+
+        <button
+          class="back-button"
+          onclick="showTaskForm('${task.id}')"
+        >
+          ✏️ Editar
+        </button>
+
+        <button
+          class="back-button"
+          onclick="toggleTask('${task.id}')"
+        >
+          ${task.active ? "🔴 Desactivar" : "🟢 Activar"}
+        </button>
+
+        <button
+          class="back-button"
+          onclick="deleteTask('${task.id}')"
+        >
+          🗑️ Eliminar
+        </button>
+
+      </div>
+    `;
+
+    container.appendChild(item);
+  });
+}
+
+
+function showTaskForm(taskId = null) {
+
+  const task =
+    taskId
+      ? (state.tasks || []).find(
+          task => task.id === taskId
+        )
+      : null;
+
+  const modal =
+    document.getElementById("modal");
+
+  const body =
+    document.getElementById("modal-body");
+
+  const subjectOptions =
+    state.subjects.map(subject => `
+      <option
+        value="${escapeAttribute(subject.id)}"
+        ${task && task.subjectId === subject.id ? "selected" : ""}
+      >
+        ${escapeHTML(subject.name)}
+      </option>
+    `).join("");
+
+  body.innerHTML = `
+
+    <h2>
+      ${task ? "✏️ Editar tarea" : "➕ Nueva tarea"}
+    </h2>
+
+    <div style="
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:20px;
+    ">
+
+      <input
+        id="task-name"
+        placeholder="Nombre de la tarea"
+        value="${task ? escapeAttribute(task.name) : ""}"
+        style="padding:12px;border:1px solid #ddd;border-radius:10px;"
+      >
+
+      <textarea
+        id="task-description"
+        placeholder="Descripción"
+        style="padding:12px;border:1px solid #ddd;border-radius:10px;"
+      >${task ? escapeHTML(task.description || "") : ""}</textarea>
+
+      <select
+        id="task-subject"
+        style="padding:12px;border:1px solid #ddd;border-radius:10px;"
+      >
+        <option value="">
+          📚 Selecciona asignatura
+        </option>
+        ${subjectOptions}
+      </select>
+
+      <input
+        id="task-xp"
+        type="number"
+        min="1"
+        value="${task ? task.xp : 20}"
+        placeholder="XP"
+        style="padding:12px;border:1px solid #ddd;border-radius:10px;"
+      >
+
+      <input
+        id="task-coins"
+        type="number"
+        min="0"
+        value="${task ? task.coins : 10}"
+        placeholder="Monedas"
+        style="padding:12px;border:1px solid #ddd;border-radius:10px;"
+      >
+
+      <label>
+        <input
+          id="task-active"
+          type="checkbox"
+          ${!task || task.active ? "checked" : ""}
+        >
+        Tarea activa
+      </label>
+
+      <button
+        class="big-button"
+        onclick="saveTask('${taskId || ""}')"
+      >
+        💾 Guardar tarea
+      </button>
+
+    </div>
+  `;
+
+  modal.classList.remove("hidden");
+}
+
+
+function saveTask(taskId) {
+
+  const name =
+    document.getElementById("task-name").value.trim();
+
+  const description =
+    document.getElementById("task-description").value.trim();
+
+  const subjectId =
+    document.getElementById("task-subject").value;
+
+  const xp =
+    Number(document.getElementById("task-xp").value) || 20;
+
+  const coins =
+    Number(document.getElementById("task-coins").value) || 10;
+
+  const active =
+    document.getElementById("task-active").checked;
+
+  if (!name) {
+    alert("Escribe el nombre de la tarea.");
+    return;
+  }
+
+  if (!subjectId) {
+    alert("Selecciona una asignatura.");
+    return;
+  }
+
+  if (!state.tasks) {
+    state.tasks = [];
+  }
+
+  if (taskId) {
+
+    const task =
+      state.tasks.find(
+        task => task.id === taskId
+      );
+
+    if (task) {
+      task.name = name;
+      task.description = description;
+      task.subjectId = subjectId;
+      task.xp = xp;
+      task.coins = coins;
+      task.active = active;
+    }
+
+  } else {
+
+    state.tasks.push({
+      id: `task-${Date.now()}`,
+      name,
+      description,
+      subjectId,
+      xp,
+      coins,
+      active
+    });
+
+  }
+
+  saveState();
+
+  closeModal();
+
+  showAdminTasks();
+
+  renderAll();
+}
+
+
+function toggleTask(taskId) {
+
+  const task =
+    (state.tasks || []).find(
+      task => task.id === taskId
+    );
+
+  if (!task) return;
+
+  task.active = !task.active;
+
+  saveState();
+
+  renderAdminTasks();
+  renderAll();
+}
+
+
+function deleteTask(taskId) {
+
+  const task =
+    (state.tasks || []).find(
+      task => task.id === taskId
+    );
+
+  if (!task) return;
+
+  const confirmed =
+    confirm(
+      `¿Seguro que quieres eliminar "${task.name}"?`
+    );
+
+  if (!confirmed) return;
+
+  state.tasks =
+    state.tasks.filter(
+      task => task.id !== taskId
+    );
+
+  saveState();
+
+  renderAdminTasks();
+  renderAll();
+}
 // ---------- HISTORIAL DE MONEDAS ----------
 
 function showAdminWallet() {
