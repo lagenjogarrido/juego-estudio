@@ -470,7 +470,7 @@ function renderAll() {
   setText("home-level-circle", level);
   setText("home-xp", state.xp);
   setText("home-coins", state.coins);
-
+  setText("home-streak", state.studyStreak || 0);
   setText(
     "home-topics",
     state.completedTopics.length
