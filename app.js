@@ -868,50 +868,6 @@ function uncompleteTopic(topicId) {
   renderAll();
 }
 
-// ---------- COMPLETAR TAREAS ----------
-
-function completeTask(taskId) {
-
-  if (!state.completedTasks) {
-    state.completedTasks = [];
-  }
-
-  if (state.completedTasks.includes(taskId)) {
-    return;
-  }
-
-  const task =
-    (state.tasks || []).find(
-      task => task.id === taskId
-    );
-
-  if (!task || !task.active) {
-    return;
-  }
-
-  state.completedTasks.push(taskId);
-
-  addXP(task.xp || 20);
-
-  addCoins(
-    task.coins || 10,
-    `Tarea completada: ${task.name}`
-  );
-
-  saveState();
-
-  renderAll();
-
-  if (selectedSubjectId) {
-    renderTopics(selectedSubjectId);
-  }
-
-  alert(
-    `🎉 ¡Tarea completada!\n\n` +
-    `⭐ +${task.xp || 20} XP\n` +
-    `🪙 +${task.coins || 10} monedas`
-  );
-}
 // ---------- XP ----------
 
 function addXP(amount) {
@@ -928,9 +884,60 @@ function addXP(amount) {
 
     setTimeout(() => {
 
-      alert(
-        `🎉 ¡SUBIDA DE NIVEL!\n\nHas alcanzado el nivel ${newLevel} ⭐`
-      );
+      const modal =
+        document.getElementById("modal");
+
+      const body =
+        document.getElementById("modal-body");
+
+      if (!modal || !body) return;
+
+      body.innerHTML = `
+        <div style="text-align:center; padding:20px;">
+
+          <div style="font-size:70px;">
+            🍄✨
+          </div>
+
+          <h2 style="font-size:30px;">
+            🎉 ¡SUBIDA DE NIVEL!
+          </h2>
+
+          <h1 style="font-size:42px;">
+            NIVEL ${newLevel}
+          </h1>
+
+          <p style="font-size:18px;">
+            ⭐ ¡Has conseguido suficiente experiencia!
+          </p>
+
+          ${
+            newLevel % 5 === 0
+              ? `
+                <div style="
+                  margin-top:20px;
+                  padding:15px;
+                  border-radius:15px;
+                  background:#fff3cd;
+                ">
+                  🎁 <strong>¡RECOMPENSA ESPECIAL!</strong>
+                  <p>Has llegado al nivel ${newLevel}.</p>
+                </div>
+              `
+              : ""
+          }
+
+          <button
+            class="big-button"
+            style="margin-top:20px;"
+            onclick="closeModal()">
+            ▶️ CONTINUAR
+          </button>
+
+        </div>
+      `;
+
+      modal.classList.remove("hidden");
 
     }, 100);
 
