@@ -222,7 +222,19 @@ const defaultRewards = [
   }
 ];
 
+// ---------- SUPABASE ----------
 
+const SUPABASE_URL =
+  "https://fnpqbstdveyprggifjxi.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_CXwIfRkb7r0RFT-SQ59jhg_LVXSuM5B";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 // ---------- ESTADO DEL JUEGO ----------
 
 const defaultState = {
