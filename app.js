@@ -621,7 +621,7 @@ function renderTopics(subjectId) {
 
     container.appendChild(card);
   });
-}
+
 
   // ---------- TAREAS DE LA ASIGNATURA ----------
 
