@@ -812,7 +812,56 @@ topics.forEach((topic, index) => {
     }
 
 }
+// ---------- RACHA DE ESTUDIO ----------
 
+function updateStudyStreak() {
+
+  const today = new Date().toISOString().split("T")[0];
+
+  // Si ya ha estudiado hoy, no hacemos nada
+  if (state.lastStudyDate === today) {
+    return;
+  }
+
+  if (!state.lastStudyDate) {
+
+    state.studyStreak = 1;
+
+  } else {
+
+    const lastDate =
+      new Date(state.lastStudyDate);
+
+    const currentDate =
+      new Date(today);
+
+    const difference =
+      Math.round(
+        (currentDate - lastDate) /
+        (1000 * 60 * 60 * 24)
+      );
+
+    if (difference === 1) {
+
+      state.studyStreak += 1;
+
+    } else {
+
+      state.studyStreak = 1;
+
+    }
+  }
+
+  state.lastStudyDate = today;
+
+  // 🎁 Bonus diario
+  addCoins(
+    5,
+    `🔥 Racha de estudio: ${state.studyStreak} día${state.studyStreak === 1 ? "" : "s"}`
+  );
+
+  saveState();
+}
 function completeTopic(topicId) {
 
   if (state.completedTopics.includes(topicId)) {
