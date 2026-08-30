@@ -623,7 +623,79 @@ function renderTopics(subjectId) {
   });
 }
 
+  // ---------- TAREAS DE LA ASIGNATURA ----------
 
+  const tasks = (state.tasks || []).filter(
+    task =>
+      task.subjectId === subjectId &&
+      task.active
+  );
+
+  if (tasks.length > 0) {
+
+    const tasksTitle =
+      document.createElement("div");
+
+    tasksTitle.innerHTML = `
+      <h2 style="margin: 25px 0 15px;">
+        ✅ Tareas
+      </h2>
+    `;
+
+    container.appendChild(tasksTitle);
+
+    tasks.forEach(task => {
+
+      const completed =
+        state.completedTasks?.includes(task.id);
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        `topic-card ${completed ? "completed" : ""}`;
+
+      card.innerHTML = `
+        <div class="topic-info">
+
+          <h3>
+            ${completed ? "✅" : "📝"}
+            ${escapeHTML(task.name)}
+          </h3>
+
+          ${
+            task.description
+              ? `<p>${escapeHTML(task.description)}</p>`
+              : ""
+          }
+
+          <p style="margin-top:8px;">
+            ⭐ +${task.xp} XP
+            · 🪙 +${task.coins}
+          </p>
+
+        </div>
+
+        <div class="topic-actions">
+
+          ${
+            completed
+              ? `<button class="back-button" disabled>
+                   ✅ Completada
+                 </button>`
+              : `<button
+                   class="big-button"
+                   onclick="completeTask('${task.id}')">
+                   ✅ Completar
+                 </button>`
+          }
+
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  }
 function completeTopic(topicId) {
 
   if (state.completedTopics.includes(topicId)) {
@@ -681,7 +753,50 @@ function uncompleteTopic(topicId) {
   renderAll();
 }
 
+// ---------- COMPLETAR TAREAS ----------
 
+function completeTask(taskId) {
+
+  if (!state.completedTasks) {
+    state.completedTasks = [];
+  }
+
+  if (state.completedTasks.includes(taskId)) {
+    return;
+  }
+
+  const task =
+    (state.tasks || []).find(
+      task => task.id === taskId
+    );
+
+  if (!task || !task.active) {
+    return;
+  }
+
+  state.completedTasks.push(taskId);
+
+  addXP(task.xp || 20);
+
+  addCoins(
+    task.coins || 10,
+    `Tarea completada: ${task.name}`
+  );
+
+  saveState();
+
+  renderAll();
+
+  if (selectedSubjectId) {
+    renderTopics(selectedSubjectId);
+  }
+
+  alert(
+    `🎉 ¡Tarea completada!\n\n` +
+    `⭐ +${task.xp || 20} XP\n` +
+    `🪙 +${task.coins || 10} monedas`
+  );
+}
 // ---------- XP ----------
 
 function addXP(amount) {
