@@ -380,7 +380,16 @@ function showScreen(screenName) {
 
   renderAll();
 }
+// ---------- ABRIR ASIGNATURA DESDE EL MAPA ----------
 
+function openSubject(subjectId) {
+
+  showScreen("topics");
+
+  selectedSubjectId = subjectId;
+
+  renderTopics(subjectId);
+}
 
 // ---------- ACTUALIZAR INTERFAZ ----------
 
