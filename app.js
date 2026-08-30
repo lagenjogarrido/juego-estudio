@@ -331,7 +331,16 @@ function getLevelProgress() {
 
 
 // ---------- NAVEGACIÓN ----------
+function requestAdminAccess() {
+  const password = prompt("🔐 Introduce la contraseña de administración:");
 
+  if (password === "Luna123") {
+    sessionStorage.setItem("adminAccess", "true");
+    showScreen("admin");
+  } else if (password !== null) {
+    alert("❌ Contraseña incorrecta.");
+  }
+}
 function showScreen(screenName) {
 
   document.querySelectorAll(".screen").forEach(screen => {
