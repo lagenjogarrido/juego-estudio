@@ -571,7 +571,7 @@ function renderTopics(subjectId) {
       </div>
     `;
 
-    return;
+  
   }
 
   topics.forEach(topic => {
