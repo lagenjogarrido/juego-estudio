@@ -258,36 +258,172 @@ let selectedSubjectId = null;
 
 // ---------- GUARDADO ----------
 
-function loadState() {
+const GAME_ID = "rafa-quest";
+
+async function loadStateFromSupabase() {
+
   try {
-    const saved = localStorage.getItem("rafaQuestState");
+
+    const { data, error } = await supabaseClient
+      .from("game_data")
+      .select("data")
+      .eq("game_id", GAME_ID)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Error cargando desde Supabase:", error);
+      return false;
+    }
+
+    if (!data) {
+      console.log("No hay partida online todavía.");
+      return false;
+    }
+
+    state = {
+      ...structuredClone(defaultState),
+      ...data.data,
+      subjects:
+        data.data.subjects ||
+        structuredClone(defaultSubjects),
+      rewards:
+        data.data.rewards ||
+        structuredClone(defaultRewards),
+      completedTopics:
+        data.data.completedTopics || [],
+      purchasedRewards:
+        data.data.purchasedRewards || [],
+      coinHistory:
+        data.data.coinHistory || [],
+      completedTasks:
+        data.data.completedTasks || [],
+      tasks:
+        data.data.tasks || [],
+      studyStreak:
+        data.data.studyStreak || 0,
+      lastStudyDate:
+        data.data.lastStudyDate || null
+    };
+
+    // Guardamos también una copia local
+    localStorage.setItem(
+      "rafaQuestState",
+      JSON.stringify(state)
+    );
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      "Error cargando partida online:",
+      error
+    );
+
+    return false;
+  }
+}
+
+
+function loadState() {
+
+  try {
+
+    const saved =
+      localStorage.getItem("rafaQuestState");
 
     if (!saved) {
       return structuredClone(defaultState);
     }
 
-    const parsed = JSON.parse(saved);
+    const parsed =
+      JSON.parse(saved);
 
     return {
       ...structuredClone(defaultState),
       ...parsed,
-      subjects: parsed.subjects || structuredClone(defaultSubjects),
-      rewards: parsed.rewards || structuredClone(defaultRewards),
-      completedTopics: parsed.completedTopics || [],
-      purchasedRewards: parsed.purchasedRewards || [],
-      coinHistory: parsed.coinHistory || []
+      subjects:
+        parsed.subjects ||
+        structuredClone(defaultSubjects),
+      rewards:
+        parsed.rewards ||
+        structuredClone(defaultRewards),
+      completedTopics:
+        parsed.completedTopics || [],
+      purchasedRewards:
+        parsed.purchasedRewards || [],
+      coinHistory:
+        parsed.coinHistory || [],
+      completedTasks:
+        parsed.completedTasks || [],
+      tasks:
+        parsed.tasks || [],
+      studyStreak:
+        parsed.studyStreak || 0,
+      lastStudyDate:
+        parsed.lastStudyDate || null
     };
 
   } catch (error) {
-    console.error("Error cargando partida:", error);
+
+    console.error(
+      "Error cargando partida:",
+      error
+    );
+
     return structuredClone(defaultState);
   }
 }
 
 
 function saveState() {
-  localStorage.setItem("rafaQuestState", JSON.stringify(state));
+
+  // 💾 Guardado local
+  localStorage.setItem(
+    "rafaQuestState",
+    JSON.stringify(state)
+  );
+
+  // ☁️ Guardado online
+  saveStateToSupabase();
 }
+
+
+async function saveStateToSupabase() {
+
+  try {
+
+    const { error } = await supabaseClient
+      .from("game_data")
+      .upsert(
+        {
+          game_id: GAME_ID,
+          data: state,
+          updated_at: new Date().toISOString()
+        },
+        {
+          onConflict: "game_id"
+        }
+      );
+
+    if (error) {
+      console.error(
+        "Error guardando en Supabase:",
+        error
+      );
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Error guardando partida online:",
+      error
+    );
+  }
+}
+
+
+// ---------- NIVELES ----------
 
 
 // ---------- NIVELES ----------
