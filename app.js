@@ -1340,6 +1340,8 @@ function renderAdminSubjects() {
 
     item.className = "topic-card";
 
+    const topics = subject.topics || [];
+
     item.innerHTML = `
 
       <div class="topic-info">
@@ -1350,8 +1352,42 @@ function renderAdminSubjects() {
         </h3>
 
         <p>
-          ${(subject.topics || []).length} temas
+          ${topics.length} temas
         </p>
+
+        ${
+          topics.length > 0
+            ? `
+              <div style="margin-top:15px;">
+                ${topics.map((topic, index) => `
+                  <div style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:space-between;
+                    gap:10px;
+                    padding:10px;
+                    margin-bottom:8px;
+                    background:rgba(255,255,255,0.7);
+                    border-radius:12px;
+                  ">
+
+                    <span>
+                      📖 ${index + 1}. ${escapeHTML(topic.name)}
+                    </span>
+
+                    <button
+                      class="back-button"
+                      onclick="deleteTopic('${topic.id}', '${subject.id}')"
+                    >
+                      🗑️
+                    </button>
+
+                  </div>
+                `).join("")}
+              </div>
+            `
+            : ""
+        }
 
       </div>
 
@@ -1369,6 +1405,41 @@ function renderAdminSubjects() {
 }
 
 
+function deleteTopic(topicId, subjectId) {
+
+  const subject =
+    state.subjects.find(s => s.id === subjectId);
+
+  if (!subject) return;
+
+  const topic =
+    (subject.topics || []).find(t => t.id === topicId);
+
+  if (!topic) return;
+
+  const confirmed =
+    confirm(
+      `¿Quieres eliminar el tema "${topic.name}"?`
+    );
+
+  if (!confirmed) return;
+
+  subject.topics =
+    (subject.topics || []).filter(
+      t => t.id !== topicId
+    );
+
+  // Si estaba completado, también lo quitamos del progreso
+  state.completedTopics =
+    state.completedTopics.filter(
+      id => id !== topicId
+    );
+
+  saveState();
+
+  renderAdminSubjects();
+  renderAll();
+}
 function showAddTopicForm(subjectId) {
 
   const subject =
