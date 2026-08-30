@@ -941,7 +941,7 @@ function completeTask(taskId) {
   const coins = Number(task.coins) || 10;
 
   state.completedTasks.push(taskId);
-
+  updateStudyStreak();
   addXP(xp);
 
   addCoins(
