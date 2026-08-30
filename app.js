@@ -840,7 +840,7 @@ function completeTopic(topicId) {
   const coins = topic.coins || 10;
 
   state.completedTopics.push(topicId);
-
+  updateStudyStreak();
   addXP(xp);
 
   addCoins(
