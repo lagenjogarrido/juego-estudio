@@ -231,6 +231,8 @@ const defaultState = {
   completedTopics: [],
   purchasedRewards: [],
   coinHistory: [],
+  tasks: [],
+completedTasks: [],
   subjects: defaultSubjects,
   rewards: defaultRewards
 };
