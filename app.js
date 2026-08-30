@@ -2358,7 +2358,13 @@ document.addEventListener(
   "DOMContentLoaded",
   async () => {
 
-    await loadStateFromSupabase();
+    const loadedOnline = await loadStateFromSupabase();
+
+    if (loadedOnline) {
+      console.log("☁️ Partida cargada desde Supabase");
+    } else {
+      console.log("💾 Usando partida local");
+    }
 
     renderAll();
 
