@@ -280,15 +280,45 @@ function saveState() {
 
 function getLevel(xp) {
 
-  if (xp >= 5000) return 10;
-  if (xp >= 3500) return 9;
-  if (xp >= 2500) return 8;
-  if (xp >= 1500) return 7;
-  if (xp >= 1000) return 6;
-  if (xp >= 750) return 5;
-  if (xp >= 500) return 4;
-  if (xp >= 250) return 3;
-  if (xp >= 100) return 2;
+  if (xp >= 20000) return 40;
+  if (xp >= 18500) return 39;
+  if (xp >= 17000) return 38;
+  if (xp >= 15500) return 37;
+  if (xp >= 14000) return 36;
+  if (xp >= 12500) return 35;
+  if (xp >= 11200) return 34;
+  if (xp >= 10000) return 33;
+  if (xp >= 9000) return 32;
+  if (xp >= 8100) return 31;
+  if (xp >= 7300) return 30;
+  if (xp >= 6600) return 29;
+  if (xp >= 5950) return 28;
+  if (xp >= 5350) return 27;
+  if (xp >= 4800) return 26;
+  if (xp >= 4300) return 25;
+  if (xp >= 3850) return 24;
+  if (xp >= 3450) return 23;
+  if (xp >= 3100) return 22;
+  if (xp >= 2800) return 21;
+  if (xp >= 2500) return 20;
+  if (xp >= 2250) return 19;
+  if (xp >= 2000) return 18;
+  if (xp >= 1800) return 17;
+  if (xp >= 1600) return 16;
+  if (xp >= 1400) return 15;
+  if (xp >= 1200) return 14;
+  if (xp >= 1050) return 13;
+  if (xp >= 900) return 12;
+  if (xp >= 750) return 11;
+  if (xp >= 600) return 10;
+  if (xp >= 500) return 9;
+  if (xp >= 400) return 8;
+  if (xp >= 300) return 7;
+  if (xp >= 250) return 6;
+  if (xp >= 150) return 5;
+  if (xp >= 100) return 4;
+  if (xp >= 50) return 3;
+  if (xp >= 20) return 2;
 
   return 1;
 }
@@ -297,19 +327,49 @@ function getLevel(xp) {
 function getLevelRange(level) {
 
   const ranges = {
-    1: [0, 100],
-    2: [100, 250],
-    3: [250, 500],
-    4: [500, 750],
-    5: [750, 1000],
-    6: [1000, 1500],
-    7: [1500, 2000],
-    8: [2000, 2500],
-    9: [2500, 3500],
-    10: [3500, 5000]
+    1: [0, 20],
+    2: [20, 50],
+    3: [50, 100],
+    4: [100, 150],
+    5: [150, 250],
+    6: [250, 300],
+    7: [300, 400],
+    8: [400, 500],
+    9: [500, 600],
+    10: [600, 750],
+    11: [750, 900],
+    12: [900, 1050],
+    13: [1050, 1200],
+    14: [1200, 1400],
+    15: [1400, 1600],
+    16: [1600, 1800],
+    17: [1800, 2000],
+    18: [2000, 2250],
+    19: [2250, 2500],
+    20: [2500, 2800],
+    21: [2800, 3100],
+    22: [3100, 3450],
+    23: [3450, 3850],
+    24: [3850, 4300],
+    25: [4300, 4800],
+    26: [4800, 5350],
+    27: [5350, 5950],
+    28: [5950, 6600],
+    29: [6600, 7300],
+    30: [7300, 8100],
+    31: [8100, 9000],
+    32: [9000, 10000],
+    33: [10000, 11200],
+    34: [11200, 12500],
+    35: [12500, 14000],
+    36: [14000, 15500],
+    37: [15500, 17000],
+    38: [17000, 18500],
+    39: [18500, 20000],
+    40: [20000, 20000]
   };
 
-  return ranges[level] || [0, 100];
+  return ranges[level] || [0, 20];
 }
 
 
@@ -318,7 +378,7 @@ function getLevelProgress() {
   const level = getLevel(state.xp);
   const [min, max] = getLevelRange(level);
 
-  if (level >= 10) {
+  if (level >= 40) {
     return 100;
   }
 
@@ -330,6 +390,9 @@ function getLevelProgress() {
     )
   );
 }
+
+
+// ---------- NAVEGACIÓN ----------
 
 
 // ---------- NAVEGACIÓN ----------
