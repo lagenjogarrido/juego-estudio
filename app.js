@@ -1349,6 +1349,13 @@ function showAdminSubjects() {
 
       <div id="admin-subjects-list"></div>
 
+      <button
+        class="back-button"
+        style="margin-top:20px;"
+        onclick="resetProgress()">
+        🔄 Reiniciar progreso
+      </button>
+
     </div>
   `;
 
@@ -1472,6 +1479,27 @@ function deleteTopic(topicId, subjectId) {
   renderAdminSubjects();
   renderAll();
 }
+function resetProgress() {
+
+  const confirmed = confirm(
+    "⚠️ ¿Seguro que quieres reiniciar todo el progreso?\n\n" +
+    "Se pondrán a 0 la XP, monedas y temas/tareas completados."
+  );
+
+  if (!confirmed) return;
+
+  state.xp = 0;
+  state.coins = 0;
+  state.completedTopics = [];
+  state.completedTasks = [];
+
+  saveState();
+  renderAll();
+
+  alert("🔄 ¡Progreso reiniciado!\n\n⭐ XP: 0\n🪙 Monedas: 0");
+}
+
+
 function showAddTopicForm(subjectId) {
 
   const subject =
