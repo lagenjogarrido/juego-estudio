@@ -867,7 +867,44 @@ function uncompleteTopic(topicId) {
   saveState();
   renderAll();
 }
+// ---------- COMPLETAR TAREAS ----------
 
+function completeTask(taskId) {
+
+  if (!state.completedTasks) {
+    state.completedTasks = [];
+  }
+
+  if (state.completedTasks.includes(taskId)) {
+    return;
+  }
+
+  const task =
+    (state.tasks || []).find(
+      task => task.id === taskId
+    );
+
+  if (!task) return;
+
+  const xp = Number(task.xp) || 20;
+  const coins = Number(task.coins) || 10;
+
+  state.completedTasks.push(taskId);
+
+  addXP(xp);
+
+  addCoins(
+    coins,
+    `Tarea completada: ${task.name}`
+  );
+
+  saveState();
+  renderAll();
+
+  alert(
+    `🎉 ¡Tarea completada!\n\n+${xp} XP\n+${coins} 🪙`
+  );
+}
 // ---------- XP ----------
 
 function addXP(amount) {
