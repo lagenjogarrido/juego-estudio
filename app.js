@@ -581,7 +581,7 @@ function renderTopics(subjectId) {
         </p>
       </div>
     `;
-
+  return;
   
   }
 
