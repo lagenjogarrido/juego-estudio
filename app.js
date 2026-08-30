@@ -232,7 +232,9 @@ const defaultState = {
   purchasedRewards: [],
   coinHistory: [],
   tasks: [],
-completedTasks: [],
+  completedTasks: [],
+  studyStreak: 0,
+  lastStudyDate: null,
   subjects: defaultSubjects,
   rewards: defaultRewards
 };
