@@ -695,7 +695,10 @@ function renderTopics(subjectId) {
 
       container.appendChild(card);
     });
-  }
+    }
+
+}
+
 function completeTopic(topicId) {
 
   if (state.completedTopics.includes(topicId)) {
