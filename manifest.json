@@ -1,1 +1,10 @@
-
+{
+  "name": "Rafa Quest",
+  "short_name": "Rafa Quest",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f6fa",
+  "theme_color": "#6c5ce7",
+  "description": "Juego de estudio de Rafa",
+  "icons": []
+}
